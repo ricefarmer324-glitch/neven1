@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spanish Finals Crash Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1929;
+    --surface2: #221f35;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.14);
+    --accent: #f6c90e;
+    --accent2: #ff6b6b;
+    --accent3: #6bffb8;
+    --accent4: #6bb5ff;
+    --text: #ede8f5;
+    --text-muted: #8b87a8;
+    --text-dim: #5a5778;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR LAYOUT ── */
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-logo {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-logo .flag {
+    font-size: 28px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .sidebar-logo h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-logo p {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+
+  .sidebar-nav {
+    padding: 12px 0;
+    flex: 1;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    font-family: 'Syne', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  .nav-item:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-item.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(246, 201, 14, 0.06);
+  }
+
+  .nav-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    min-width: 20px;
+  }
+
+  .nav-item.active .nav-num { color: var(--accent); opacity: 0.6; }
+
+  .sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .progress-bar {
+    width: 120px;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 10%;
+  }
+
+  /* ── SECTION PANELS ── */
+  .panel {
+    display: none;
+    padding: 48px 48px 60px;
+    max-width: 820px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO SECTION ── */
+  .hero-panel {
+    display: none;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .hero-panel.active { display: block; }
+
+  .hero-content {
+    padding: 80px 48px 60px;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(246,201,14,0.1);
+    border: 1px solid rgba(246,201,14,0.25);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .hero-title .accent-word { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 560px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+
+  .hero-card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-card-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #0f0e17;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .start-btn:hover { background: #ffd93d; transform: translateY(-1px); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .section-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ── BLOCK HEADINGS ── */
+  .block-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .block-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── EXPLANATION BOX ── */
+  .explain-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 4px;
+  }
+
+  .explain-box strong { color: var(--accent); font-style: normal; }
+  .explain-box em { color: var(--accent3); font-style: italic; }
+
+  /* ── CHIPS ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; }
+
+  .chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .chip-y { background: rgba(246,201,14,0.1); color: var(--accent); border-color: rgba(246,201,14,0.3); }
+  .chip-g { background: rgba(107,255,184,0.08); color: var(--accent3); border-color: rgba(107,255,184,0.25); }
+  .chip-r { background: rgba(255,107,107,0.1); color: var(--accent2); border-color: rgba(255,107,107,0.3); }
+  .chip-b { background: rgba(107,181,255,0.1); color: var(--accent4); border-color: rgba(107,181,255,0.3); }
+
+  /* ── EXAMPLES ── */
+  .examples-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .example-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+
+  .example-item:hover { border-color: var(--border2); }
+
+  .example-es {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .example-es em { color: var(--accent); font-style: normal; }
+
+  .example-en {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
+  }
+
+  /* ── MISTAKES BOX ── */
+  .mistakes-box {
+    background: rgba(255,107,107,0.06);
+    border: 1px solid rgba(255,107,107,0.2);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .mistake-item {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .mistake-item:last-child { margin-bottom: 0; }
+
+  .mistake-icon {
+    color: var(--accent2);
+    font-style: normal;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    margin-top: 3px;
+  }
+
+  .mistake-item strong { color: var(--accent2); font-style: normal; }
+  .mistake-item .correct { color: var(--accent3); }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  .compare-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .compare-table td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .compare-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  .compare-table .highlight-cell {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+
+  .tl-node {
+    flex-shrink: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .tl-node.tl-accent {
+    background: rgba(246,201,14,0.1);
+    border-color: rgba(246,201,14,0.4);
+  }
+
+  .tl-node.tl-accent2 {
+    background: rgba(107,181,255,0.1);
+    border-color: rgba(107,181,255,0.4);
+  }
+
+  .tl-node .tl-label {
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Syne', sans-serif;
+    color: var(--text);
+  }
+
+  .tl-node.tl-accent .tl-label { color: var(--accent); }
+  .tl-node.tl-accent2 .tl-label { color: var(--accent4); }
+
+  .tl-node .tl-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 2px;
+  }
+
+  .tl-arrow {
+    flex-shrink: 0;
+    color: var(--text-dim);
+    font-size: 20px;
+    padding: 0 6px;
+  }
+
+  /* ── PRACTICE SECTION ── */
+  .practice-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 4px;
+  }
+
+  .q-block { margin-bottom: 24px; }
+  .q-block:last-of-type { margin-bottom: 16px; }
+
+  .q-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .q-text .blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px solid var(--accent);
+    margin: 0 4px;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .options-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: left;
+    transition: all 0.18s;
+  }
+
+  .opt-btn:hover:not(:disabled) {
+    border-color: var(--border2);
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .opt-btn.selected { border-color: var(--accent4); color: var(--text); background: rgba(107,181,255,0.08); }
+  .opt-btn.correct { border-color: var(--accent3); color: var(--accent3); background: rgba(107,255,184,0.08); }
+  .opt-btn.wrong { border-color: var(--accent2); color: var(--accent2); background: rgba(255,107,107,0.08); }
+
+  .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border2);
+    flex-shrink: 0;
+    color: var(--text-dim);
+  }
+
+  .opt-btn.selected .opt-letter { border-color: var(--accent4); color: var(--accent4); }
+  .opt-btn.correct .opt-letter { border-color: var(--accent3); color: var(--accent3); }
+  .opt-btn.wrong .opt-letter { border-color: var(--accent2); color: var(--accent2); }
+
+  .fill-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 2;
+  }
+
+  .fill-input {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    width: 160px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .fill-input:focus { border-color: var(--accent4); }
+  .fill-input.fill-correct { border-color: var(--accent3); background: rgba(107,255,184,0.06); color: var(--accent3); }
+  .fill-input.fill-wrong { border-color: var(--accent2); background: rgba(255,107,107,0.06); color: var(--accent2); }
+
+  .fill-hint { font-size: 12px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+
+  .check-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 9px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .check-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .feedback-msg {
+    display: none;
+    margin-top: 10px;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .feedback-msg.show { display: block; }
+  .feedback-correct { background: rgba(107,255,184,0.08); color: var(--accent3); border: 1px solid rgba(107,255,184,0.2); }
+  .feedback-wrong { background: rgba(255,107,107,0.08); color: var(--accent2); border: 1px solid rgba(255,107,107,0.2); }
+
+  /* ── ANSWER KEY ── */
+  .answer-key-wrap { margin-top: 20px; }
+
+  .toggle-answers {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(246,201,14,0.25);
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    opacity: 0.7;
+  }
+
+  .toggle-answers:hover { opacity: 1; background: rgba(246,201,14,0.06); }
+
+  .answer-key-content {
+    display: none;
+    margin-top: 10px;
+    background: rgba(246,201,14,0.04);
+    border: 1px solid rgba(246,201,14,0.15);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .answer-key-content.show { display: block; }
+
+  .ans-list { list-style: none; }
+
+  .ans-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+  }
+
+  .ans-item:last-child { border-bottom: none; }
+  .ans-num { color: var(--text-dim); min-width: 24px; }
+  .ans-val { color: var(--accent); }
+
+  /* ── NAVIGATION BUTTONS ── */
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-prev, .nav-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--text-muted);
+  }
+
+  .nav-prev:hover { color: var(--text); border-color: var(--border2); }
+
+  .nav-next {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f0e17;
+    margin-left: auto;
+  }
+
+  .nav-next:hover { background: #ffd93d; }
+
+  /* ── MIXED TEST ── */
+  .test-header {
+    background: linear-gradient(135deg, rgba(246,201,14,0.08), rgba(107,181,255,0.06));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .test-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .test-header p { font-size: 14px; color: var(--text-muted); }
+
+  .score-display {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .score-display.show { display: block; }
+
+  .score-big {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .score-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .score-message {
+    margin-top: 12px;
+    font-size: 16px;
+    font-style: italic;
+  }
+
+  .submit-test {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f0e17;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .submit-test:hover { background: #ffd93d; }
+
+  /* ── MOBILE HAMBURGER ── */
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .main { margin-left: 0; }
+
+    .hamburger { display: flex; align-items: center; }
+
+    .panel { padding: 24px 20px 48px; }
+
+    .hero-content { padding: 40px 20px 40px; }
+
+    .hero-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .example-item { grid-template-columns: 1fr; }
+
+    .example-en { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 6px; }
+
+    .topbar { padding: 12px 20px; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* ── WEIRDO BOX ── */
+  .weirdo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .weirdo-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    text-align: center;
+  }
+
+  .weirdo-letter {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .weirdo-word {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+
+  .weirdo-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="flag">🇪🇸</span>
+      <h1>Spanish Crash Course</h1>
+      <p>Finals Prep · 9 Topics</p>
+    </div>
+    <div class="sidebar-nav" id="nav-list">
+      <div class="nav-item active" data-section="home">
+        <span class="nav-num">—</span>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" data-section="s1">
+        <span class="nav-num">01</span>
+        <span>Pretérito vs Imperfecto</span>
+      </div>
+      <div class="nav-item" data-section="s2">
+        <span class="nav-num">02</span>
+        <span>Pres. Perfecto vs Pluscuamperf.</span>
+      </div>
+      <div class="nav-item" data-section="s3">
+        <span class="nav-num">03</span>
+        <span>Tiempos en Pasado</span>
+      </div>
+      <div class="nav-item" data-section="s4">
+        <span class="nav-num">04</span>
+        <span>Acentos</span>
+      </div>
+      <div class="nav-item" data-section="s5">
+        <span class="nav-num">05</span>
+        <span>Frases Impersonales</span>
+      </div>
+      <div class="nav-item" data-section="s6">
+        <span class="nav-num">06</span>
+        <span>Por vs Para</span>
+      </div>
+      <div class="nav-item" data-section="s7">
+        <span class="nav-num">07</span>
+        <span>Usos de "Se"</span>
+      </div>
+      <div class="nav-item" data-section="s8">
+        <span class="nav-num">08</span>
+        <span>Subjuntivo</span>
+      </div>
+      <div class="nav-item" data-section="s9">
+        <span class="nav-num">09</span>
+        <span>Perf. de Subjuntivo</span>
+      </div>
+      <div class="nav-item" data-section="test">
+        <span class="nav-num">★</span>
+        <span>Mixed Final Test</span>
+      </div>
+    </div>
+    <div class="sidebar-footer">Open in any browser · No install needed</div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburger">☰</button>
+      <div class="topbar-title" id="topbar-title">Home</div>
+      <div class="progress-bar-wrap">
+        <span class="progress-label" id="progress-label">0 / 9</span>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- HOME PANEL -->
+    <div class="hero-panel active" id="panel-home">
+      <div class="hero-content">
+        <div class="hero-badge">🎯 FINALS PREP</div>
+        <h1 class="hero-title">Your <span class="accent-word">Spanish</span><br/>Crash Course</h1>
+        <p class="hero-desc">9 grammar topics explained clearly, with real examples, common mistakes, and practice questions. Built for the night before the test.</p>
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="hero-card-num">9</div>
+            <div class="hero-card-label">Topics</div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-num">45+</div>
+            <div class="hero-card-label">Examples</div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-num">50+</div>
+            <div class="hero-card-label">Questions</div>
+          </div>
+        </div>
+        <button class="start-btn" onclick="goTo('s1')">Start Learning →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 1: PRETÉRITO VS IMPERFECTO -->
+    <div class="panel" id="panel-s1">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 01</div>
+        <div class="section-title">Pretérito vs Imperfecto</div>
+        <div class="section-subtitle">The two most confused past tenses — here's how to tell them apart</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        Both are past tenses, but they do different jobs.<br><br>
+        <strong>Pretérito</strong> = something that <em>started AND finished</em>. It's done. Complete. Over. You can almost picture a period at the end.<br><br>
+        <strong>Imperfecto</strong> = something that was <em>ongoing, repeated, or described</em> the past. No clear end. Think of it like a background painting — it sets the scene.<br><br>
+        <strong>Quick test:</strong> Ask "Did this have a definite end?" If yes → pretérito. If it was a habit or just setting the scene → imperfecto.
+      </div>
+
+      <div class="block-heading">Signal Words</div>
+      <div class="chips">
+        <span class="chip chip-y">ayer</span>
+        <span class="chip chip-y">anoche</span>
+        <span class="chip chip-y">el lunes</span>
+        <span class="chip chip-y">de repente</span>
+        <span class="chip chip-y">una vez</span>
+        <span class="chip chip-y">en 2018</span>
+        <span class="chip chip-g">siempre</span>
+        <span class="chip chip-g">todos los días</span>
+        <span class="chip chip-g">cuando era niño/a</span>
+        <span class="chip chip-g">a veces</span>
+        <span class="chip chip-g">generalmente</span>
+        <span class="chip chip-g">cada semana</span>
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-top:4px;"><span style="color:var(--accent);">■</span> Yellow = pretérito &nbsp;&nbsp; <span style="color:var(--accent3);">■</span> Green = imperfecto</p>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">Ayer <em>comí</em> una pizza entera.</div>
+          <div class="example-en">Yesterday I ate a whole pizza. (done — pretérito)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">De niño, <em>comía</em> pizza todos los días.</div>
+          <div class="example-en">As a kid, I used to eat pizza every day. (habit — imperfecto)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Yo <em>estudiaba</em> cuando ella <em>llamó</em>.</div>
+          <div class="example-en">I was studying (background) when she called (event).</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">El lunes, <em>fui</em> al gimnasio.</div>
+          <div class="example-en">On Monday, I went to the gym. (specific day = pretérito)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es"><em>Hacía</em> frío y <em>llovía</em> cuando salí.</div>
+          <div class="example-en">It was cold and raining when I left. (weather description = imperfecto)</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using pretérito for habits: <strong>Siempre fui al parque</strong> → <span class="correct">Siempre iba al parque</span></div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting that descriptions (weather, feelings, age, appearance) almost always need <strong>imperfecto</strong>.</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using imperfecto when a clear time frame is given: <strong>A las 3pm yo comía</strong> → <span class="correct">comí</span></div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area" id="practice-s1">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Ayer yo _____ (comer) tacos con mis amigos.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q1',false)"><span class="opt-letter">A</span> comía</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q1',true)"><span class="opt-letter">B</span> comí</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q1',false)"><span class="opt-letter">C</span> como</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q1',false)"><span class="opt-letter">D</span> coma</button>
+          </div>
+          <div class="feedback-msg" id="s1q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 2</div>
+          <div class="q-text">De pequeña, ella _____ (bailar) flamenco todos los fines de semana.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q2',false)"><span class="opt-letter">A</span> bailó</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q2',false)"><span class="opt-letter">B</span> baila</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q2',true)"><span class="opt-letter">C</span> bailaba</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s1q2',false)"><span class="opt-letter">D</span> bailara</button>
+          </div>
+          <div class="feedback-msg" id="s1q2-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            De repente, él
+            <input class="fill-input" id="s1f1" placeholder="llegar..." />
+            tarde a clase.
+            <span class="fill-hint">(pretérito)</span>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 4</div>
+          <div class="fill-row">
+            Cuando éramos niños, siempre
+            <input class="fill-input" id="s1f2" placeholder="jugar..." />
+            en el parque.
+            <span class="fill-hint">(imperfecto, nosotros)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s1f1',ans:'llegó'},{id:'s1f2',ans:'jugábamos'}],'s1-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s1-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s1-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s1-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">comí</span><span style="color:var(--text-dim);margin-left:8px;">"Ayer" = signal for pretérito</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">bailaba</span><span style="color:var(--text-dim);margin-left:8px;">"todos los fines de semana" = habit = imperfecto</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">llegó</span><span style="color:var(--text-dim);margin-left:8px;">"de repente" = sudden completed action</span></li>
+              <li class="ans-item"><span class="ans-num">4.</span><span class="ans-val">jugábamos</span><span style="color:var(--text-dim);margin-left:8px;">habitual past action</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('home')">← Home</button>
+        <button class="nav-next" onclick="goTo('s2')">Next: Pres. Perfecto →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 2: PRESENTE PERFECTO VS PLUSCUAMPERFECTO -->
+    <div class="panel" id="panel-s2">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 02</div>
+        <div class="section-title">Presente Perfecto vs Pluscuamperfecto</div>
+        <div class="section-subtitle">"Have done" vs "had done" — it's all about the order of events</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        <strong>Presente Perfecto</strong> = "I <em>have done</em>" — something happened in the past but it's still relevant to RIGHT NOW.<br>
+        Structure: <strong>haber (present) + participio</strong> → he/has/ha/hemos/habéis/han + comido<br><br>
+        <strong>Pluscuamperfecto</strong> = "I <em>had done</em>" — something happened BEFORE another past event. The further-back past.<br>
+        Structure: <strong>haber (imperfecto) + participio</strong> → había/habías/había/habíamos/habíais/habían + comido<br><br>
+        <strong>Key irregular participles:</strong> hecho, dicho, visto, escrito, roto, puesto, vuelto, abierto
+      </div>
+
+      <div class="block-heading">Timeline</div>
+      <div class="timeline">
+        <div class="tl-node tl-accent">
+          <div class="tl-label">había comido</div>
+          <div class="tl-sub">pluscuamperfecto</div>
+        </div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node">
+          <div class="tl-label">otra acción pasada</div>
+          <div class="tl-sub">past event</div>
+        </div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node tl-accent2">
+          <div class="tl-label">he comido</div>
+          <div class="tl-sub">presente perfecto</div>
+        </div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node">
+          <div class="tl-label">AHORA</div>
+          <div class="tl-sub">now</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es"><em>He comido</em> sushi tres veces este mes.</div>
+          <div class="example-en">I have eaten sushi three times this month. (still "this month" — relevant now)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Nunca <em>he viajado</em> a Europa.</div>
+          <div class="example-en">I have never traveled to Europe. (still true today)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Cuando llegué, ella ya <em>había salido</em>.</div>
+          <div class="example-en">When I arrived, she had already left. (left BEFORE I arrived)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Él <em>había estudiado</em> antes del examen.</div>
+          <div class="example-en">He had studied before the exam. (studying came first)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Ya <em>hemos terminado</em> el proyecto.</div>
+          <div class="example-en">We have already finished the project. (relevant to now)</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting irregular participles: <strong>he vido</strong> → <span class="correct">he visto</span>, <strong>he escribido</strong> → <span class="correct">he escrito</span></div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using pretérito instead of pluscuamperfecto: <strong>Cuando llegué, ella salió</strong> (sounds like they happened together) → <span class="correct">había salido</span> (she left before)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Mixing up haber conjugations. Presente perfecto uses: <strong>he/has/ha/hemos/habéis/han</strong>. Pluscuamperfecto uses: <strong>había/habías/había/habíamos/habíais/habían</strong>.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Cuando llegué a la fiesta, mis amigos ya _____ (irse).</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q1',false)"><span class="opt-letter">A</span> se han ido</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q1',false)"><span class="opt-letter">B</span> se fueron</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q1',true)"><span class="opt-letter">C</span> se habían ido</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q1',false)"><span class="opt-letter">D</span> se iban</button>
+          </div>
+          <div class="feedback-msg" id="s2q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 2</div>
+          <div class="q-text">Este año _____ (aprender/yo) mucho español.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q2',false)"><span class="opt-letter">A</span> aprendí</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q2',false)"><span class="opt-letter">B</span> había aprendido</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q2',true)"><span class="opt-letter">C</span> he aprendido</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s2q2',false)"><span class="opt-letter">D</span> aprendía</button>
+          </div>
+          <div class="feedback-msg" id="s2q2-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            Nunca
+            <input class="fill-input" id="s2f1" placeholder="ver (yo)..." />
+            esa película.
+            <span class="fill-hint">(presente perfecto)</span>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 4</div>
+          <div class="fill-row">
+            Ella
+            <input class="fill-input" id="s2f2" placeholder="comer..." />
+            antes de que llegáramos.
+            <span class="fill-hint">(pluscuamperfecto)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s2f1',ans:'he visto'},{id:'s2f2',ans:'había comido'}],'s2-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s2-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s2-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s2-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">se habían ido</span><span style="color:var(--text-dim);margin-left:8px;">action before another past event</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">he aprendido</span><span style="color:var(--text-dim);margin-left:8px;">"este año" still ongoing = presente perfecto</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">he visto</span><span style="color:var(--text-dim);margin-left:8px;">irregular: ver → visto</span></li>
+              <li class="ans-item"><span class="ans-num">4.</span><span class="ans-val">había comido</span><span style="color:var(--text-dim);margin-left:8px;">happened before arrival</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s1')">← Pretérito vs Imp.</button>
+        <button class="nav-next" onclick="goTo('s3')">Next: Tiempos en Pasado →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 3: TIEMPOS EN PASADO -->
+    <div class="panel" id="panel-s3">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 03</div>
+        <div class="section-title">Tiempos en Pasado</div>
+        <div class="section-subtitle">All four past tenses side by side — the ultimate comparison</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        Spanish has <strong>four</strong> main past tenses. Think of them as different camera angles on the past:<br><br>
+        🎬 <strong>Pretérito</strong> — snapshots of completed events<br>
+        🎨 <strong>Imperfecto</strong> — the background painting (ongoing / habitual)<br>
+        🔗 <strong>Presente Perfecto</strong> — connects the past to right now<br>
+        ⏪ <strong>Pluscuamperfecto</strong> — the furthest back, before another past event
+      </div>
+
+      <div class="block-heading">Comparison Chart</div>
+      <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <tr>
+            <th>Tense</th>
+            <th>When to use</th>
+            <th>Structure</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td class="highlight-cell">Pretérito</td>
+            <td>Completed, specific, one-time actions</td>
+            <td style="font-family:'DM Mono',monospace;font-size:12px;">stem + é/aste/ó...</td>
+            <td>Fui al médico el martes.</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent3);">Imperfecto</td>
+            <td>Ongoing, habitual, descriptive past</td>
+            <td style="font-family:'DM Mono',monospace;font-size:12px;">stem + aba/ía...</td>
+            <td>Iba al médico cada semana.</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent4);">Pres. Perfecto</td>
+            <td>"Have done" — still relevant now</td>
+            <td style="font-family:'DM Mono',monospace;font-size:12px;">he/has/ha + -ado/-ido</td>
+            <td>He ido al médico hoy.</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent2);">Pluscuamperfecto</td>
+            <td>"Had done" — before another past event</td>
+            <td style="font-family:'DM Mono',monospace;font-size:12px;">había/habías + -ado/-ido</td>
+            <td>Ya había ido cuando llamaste.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="block-heading">Examples — Same Verb, 4 Tenses</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">Ayer <em>jugué</em> videojuegos.</div>
+          <div class="example-en">Pretérito — completed action yesterday</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Cuando era niño, <em>jugaba</em> videojuegos.</div>
+          <div class="example-en">Imperfecto — ongoing habit in childhood</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Esta semana <em>he jugado</em> demasiado.</div>
+          <div class="example-en">Presente Perfecto — this week, still ongoing</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Ya <em>había jugado</em> dos horas antes de que llegara mamá.</div>
+          <div class="example-en">Pluscuamperfecto — played before mom arrived</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Mixing up all four — when in doubt, ask: Was it habitual? (imperfecto) Did it have a clear end? (pretérito) Is it still relevant today? (presente perfecto) Did it happen before another past event? (pluscuamperfecto)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using pretérito for everything — <strong>don't default to pretérito just because it's past</strong>. Always check for habits, background, or sequence.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">¿Cuál tense? — "Ella siempre llegaba tarde a la escuela."</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s3q1',false)"><span class="opt-letter">A</span> Pretérito</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s3q1',true)"><span class="opt-letter">B</span> Imperfecto</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s3q1',false)"><span class="opt-letter">C</span> Presente Perfecto</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s3q1',false)"><span class="opt-letter">D</span> Pluscuamperfecto</button>
+          </div>
+          <div class="feedback-msg" id="s3q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 2</div>
+          <div class="fill-row">
+            Antes de que empezara el examen, yo ya
+            <input class="fill-input" id="s3f1" placeholder="estudiar..." />
+            todo.
+            <span class="fill-hint">(pluscuamperfecto)</span>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            Este mes
+            <input class="fill-input" id="s3f2" placeholder="leer (yo)..." />
+            tres libros.
+            <span class="fill-hint">(presente perfecto)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s3f1',ans:'había estudiado'},{id:'s3f2',ans:'he leído'}],'s3-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s3-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s3-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s3-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">Imperfecto</span><span style="color:var(--text-dim);margin-left:8px;">"siempre" = habitual</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">había estudiado</span><span style="color:var(--text-dim);margin-left:8px;">before exam started</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">he leído</span><span style="color:var(--text-dim);margin-left:8px;">"este mes" still active</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s2')">← Pres. Perfecto</button>
+        <button class="nav-next" onclick="goTo('s4')">Next: Acentos →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 4: ACENTOS -->
+    <div class="panel" id="panel-s4">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 04</div>
+        <div class="section-title">Acentos</div>
+        <div class="section-subtitle">When you stress a syllable that breaks the rules, write the accent mark</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        Spanish words are stressed on a specific syllable. There are default rules — if you break them, you write an accent mark (´).<br><br>
+        <strong>Agudas</strong> → stress on the LAST syllable. Write accent only if the word ends in <em>n, s, or vowel</em>.<br>
+        Example: ca-FÉ ✓, ha-BLÓ ✓, pa-PEL (no accent — ends in L)<br><br>
+        <strong>Llanas</strong> → stress on the SECOND-TO-LAST syllable. Write accent only if the word does <em>NOT</em> end in n, s, or vowel.<br>
+        Example: CÁ-sil (no — wait, CA-sa = no accent, ends in -a), lá-piz ✓ (ends in z)<br><br>
+        <strong>Esdrújulas</strong> → stress on the THIRD-TO-LAST syllable. <em>ALWAYS</em> write the accent.<br>
+        Example: MÚ-si-ca ✓, rá-pi-do ✓, fá-bri-ca ✓
+      </div>
+
+      <div class="block-heading">Meaning-Changing Accents</div>
+      <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <tr><th>Without accent</th><th>Meaning</th><th>With accent</th><th>Meaning</th></tr>
+          <tr><td>tu</td><td>your (possessive)</td><td class="highlight-cell">tú</td><td>you (subject)</td></tr>
+          <tr><td>el</td><td>the (article)</td><td class="highlight-cell">él</td><td>he (pronoun)</td></tr>
+          <tr><td>mi</td><td>my (possessive)</td><td class="highlight-cell">mí</td><td>me (after preposition)</td></tr>
+          <tr><td>se</td><td>reflexive pronoun</td><td class="highlight-cell">sé</td><td>I know / be (commands)</td></tr>
+          <tr><td>si</td><td>if</td><td class="highlight-cell">sí</td><td>yes</td></tr>
+          <tr><td>mas</td><td>but (literary)</td><td class="highlight-cell">más</td><td>more</td></tr>
+          <tr><td>que</td><td>that / which</td><td class="highlight-cell">qué</td><td>what? (question)</td></tr>
+          <tr><td>como</td><td>like / as / I eat</td><td class="highlight-cell">cómo</td><td>how? (question)</td></tr>
+        </table>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es"><em>Tú</em> tienes tu libro.</div>
+          <div class="example-en">You have your book. (tú = you; tu = your)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">La <em>música</em> es esdrújula.</div>
+          <div class="example-en">Music — stress 3rd from last = always gets accent</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">El <em>café</em> está caliente.</div>
+          <div class="example-en">Coffee — aguda ending in vowel = needs accent</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">¿<em>Qué</em> quieres que te diga?</div>
+          <div class="example-en">What do you want me to say? — accent in question words</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting that ALL esdrújulas ALWAYS have a written accent. No exceptions.</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Writing <strong>tu</strong> when you mean <strong>tú</strong> (subject pronoun). Ask: "Am I saying 'you' as the person, or 'your' as ownership?"</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting accents on question words in direct AND indirect questions: <strong>Dime cómo te llamas</strong> (not "como")</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Which word is an ESDRÚJULA?</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q1',false)"><span class="opt-letter">A</span> canción</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q1',false)"><span class="opt-letter">B</span> casa</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q1',true)"><span class="opt-letter">C</span> rápido</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q1',false)"><span class="opt-letter">D</span> café</button>
+          </div>
+          <div class="feedback-msg" id="s4q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 2</div>
+          <div class="q-text">Choose the correct sentence:</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q2',false)"><span class="opt-letter">A</span> Tu eres mi mejor amigo.</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q2',true)"><span class="opt-letter">B</span> Tú eres mi mejor amigo.</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q2',false)"><span class="opt-letter">C</span> El es simpático.</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s4q2',false)"><span class="opt-letter">D</span> No se la respuesta.</button>
+          </div>
+          <div class="feedback-msg" id="s4q2-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            ¿
+            <input class="fill-input" id="s4f1" placeholder="que/qué..." style="width:80px;" />
+            hora es?
+            <span class="fill-hint">(question word)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s4f1',ans:'qué'}],'s4-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s4-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s4-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s4-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">rápido</span><span style="color:var(--text-dim);margin-left:8px;">RÁ-pi-do = stress 3rd from last</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">Tú eres mi mejor amigo.</span><span style="color:var(--text-dim);margin-left:8px;">subject pronoun needs accent</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">qué</span><span style="color:var(--text-dim);margin-left:8px;">question words always get accent</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s3')">← Tiempos en Pasado</button>
+        <button class="nav-next" onclick="goTo('s5')">Next: Frases Impersonales →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 5: FRASES IMPERSONALES -->
+    <div class="panel" id="panel-s5">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 05</div>
+        <div class="section-title">Frases Impersonales</div>
+        <div class="section-subtitle">When there's no specific subject — talking about "people in general"</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        Impersonal phrases are used when the subject is <em>unknown, general, or unimportant</em> — like "one should," "it is important to," or "people say."<br><br>
+        <strong>se + verb</strong> → someone/people (general subject)<br>
+        <strong>hay</strong> → there is / there are<br>
+        <strong>es + adjective + que + subjuntivo</strong> → It is important that... (triggers subjunctive!)<br><br>
+        <strong>Key expressions:</strong> es importante que, es necesario que, es bueno que, es malo que, es posible que, se dice, se come, hay que + infinitive
+      </div>
+
+      <div class="block-heading">Structure Reference</div>
+      <div class="chips">
+        <span class="chip chip-y">se + verb (3rd person)</span>
+        <span class="chip chip-g">hay + noun</span>
+        <span class="chip chip-b">hay que + infinitive</span>
+        <span class="chip chip-r">es [adj] que + subjuntivo</span>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es"><em>Se habla</em> español aquí.</div>
+          <div class="example-en">Spanish is spoken here. (no specific speaker)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es"><em>Hay</em> mucha tarea hoy.</div>
+          <div class="example-en">There is a lot of homework today.</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es"><em>Hay que</em> estudiar para el examen.</div>
+          <div class="example-en">One must study for the exam. (general obligation)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es"><em>Es importante que</em> llegues a tiempo.</div>
+          <div class="example-en">It's important that you arrive on time. (+ subjunctive!)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es"><em>Se dice que</em> va a llover mañana.</div>
+          <div class="example-en">They say / people say it's going to rain tomorrow.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using indicative after impersonal expressions: <strong>Es importante que estudias</strong> → <span class="correct">Es importante que estudies</span> (subjunctive!)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Confusing <strong>hay</strong> (there is/are) with <strong>es</strong> (it is): "Hay importante estudiar" ✗ → <span class="correct">Hay que estudiar / Es importante estudiar</span></div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div><strong>Hay que</strong> is always followed by an INFINITIVE, never a conjugated verb.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">_____ mucho ruido en la cafetería.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s5q1',false)"><span class="opt-letter">A</span> Es</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s5q1',true)"><span class="opt-letter">B</span> Hay</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s5q1',false)"><span class="opt-letter">C</span> Se</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s5q1',false)"><span class="opt-letter">D</span> Está</button>
+          </div>
+          <div class="feedback-msg" id="s5q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 2</div>
+          <div class="fill-row">
+            Es necesario que tú
+            <input class="fill-input" id="s5f1" placeholder="hacer..." />
+            la tarea.
+            <span class="fill-hint">(subjuntivo)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s5f1',ans:'hagas'}],'s5-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s5-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s5-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s5-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">Hay</span><span style="color:var(--text-dim);margin-left:8px;">there is/are = hay + noun</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">hagas</span><span style="color:var(--text-dim);margin-left:8px;">es necesario que → triggers subjunctive</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s4')">← Acentos</button>
+        <button class="nav-next" onclick="goTo('s6')">Next: Por vs Para →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 6: POR VS PARA -->
+    <div class="panel" id="panel-s6">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 06</div>
+        <div class="section-title">Por vs Para</div>
+        <div class="section-subtitle">Both mean "for" in English — but they are NOT interchangeable</div>
+      </div>
+
+      <div class="block-heading">Quick Rule System</div>
+      <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <tr><th>POR — reason/cause/exchange</th><th>PARA — purpose/goal/destination</th></tr>
+          <tr><td>Reason or cause (because of)</td><td>Purpose / goal (in order to)</td></tr>
+          <tr><td>Exchange (in exchange for)</td><td>Recipient (for someone)</td></tr>
+          <tr><td>Duration of time (for X hours)</td><td>Deadline (due by)</td></tr>
+          <tr><td>Movement through/along a place</td><td>Destination (going to)</td></tr>
+          <tr><td>Means of communication/transport</td><td>Opinion/perspective (for a…, in the opinion of)</td></tr>
+          <tr><td>Agent in passive voice (by)</td><td>Employment (work for)</td></tr>
+        </table>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">Te llamo <em>por</em> teléfono.</div>
+          <div class="example-en">I'll call you by phone. (means of comm. → por)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Estudio <em>para</em> sacar buenas notas.</div>
+          <div class="example-en">I study in order to get good grades. (purpose → para)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Caminamos <em>por</em> el parque.</div>
+          <div class="example-en">We walked through the park. (movement through → por)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">El regalo es <em>para</em> mi mamá.</div>
+          <div class="example-en">The gift is for my mom. (recipient → para)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Necesito el ensayo <em>para</em> el lunes.</div>
+          <div class="example-en">I need the essay by Monday. (deadline → para)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Gracias <em>por</em> tu ayuda.</div>
+          <div class="example-en">Thanks for your help. (because of / in exchange for → por)</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Tricky Examples Students Confuse</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">⚠</span>
+          <div>"I worked for 3 hours" = <strong>Trabajé por 3 horas</strong> (duration → por) — NOT para</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">⚠</span>
+          <div>"I work for Google" = <strong>Trabajo para Google</strong> (employer → para) — NOT por</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">⚠</span>
+          <div>"For a student, he speaks well" = <strong>Para ser estudiante, habla bien</strong> (comparison/opinion → para)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">⚠</span>
+          <div>"I paid $20 for the shirt" = <strong>Pagué $20 por la camisa</strong> (exchange → por)</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Necesito terminar esta tarea _____ mañana.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s6q1',false)"><span class="opt-letter">A</span> por</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s6q1',true)"><span class="opt-letter">B</span> para</button>
+          </div>
+          <div class="feedback-msg" id="s6q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 2</div>
+          <div class="q-text">Gracias _____ todo lo que haces.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s6q2',true)"><span class="opt-letter">A</span> por</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s6q2',false)"><span class="opt-letter">B</span> para</button>
+          </div>
+          <div class="feedback-msg" id="s6q2-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            Este libro es
+            <input class="fill-input" id="s6f1" placeholder="por/para..." style="width:90px;" />
+            ti.
+            <span class="fill-hint">(recipient)</span>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 4</div>
+          <div class="fill-row">
+            Hablamos
+            <input class="fill-input" id="s6f2" placeholder="por/para..." style="width:90px;" />
+            dos horas.
+            <span class="fill-hint">(duration)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s6f1',ans:'para'},{id:'s6f2',ans:'por'}],'s6-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s6-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s6-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s6-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">para</span><span style="color:var(--text-dim);margin-left:8px;">deadline = para</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">por</span><span style="color:var(--text-dim);margin-left:8px;">gratitude/reason = por</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">para</span><span style="color:var(--text-dim);margin-left:8px;">recipient = para</span></li>
+              <li class="ans-item"><span class="ans-num">4.</span><span class="ans-val">por</span><span style="color:var(--text-dim);margin-left:8px;">duration = por</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s5')">← Frases Impersonales</button>
+        <button class="nav-next" onclick="goTo('s7')">Next: Usos de "Se" →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 7: USOS DE SE -->
+    <div class="panel" id="panel-s7">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 07</div>
+        <div class="section-title">Usos de "Se"</div>
+        <div class="section-subtitle">One tiny word — four completely different jobs</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        "Se" is one of the hardest words in Spanish because it does very different things depending on context. Learn to recognize each type:<br><br>
+        1. <strong>Reflexivo</strong> — subject acts on itself ("I wash myself")<br>
+        2. <strong>Recíproco</strong> — two+ people act on each other ("They love each other")<br>
+        3. <strong>Le → Se</strong> — indirect object pronoun swaps to "se" before lo/la/los/las<br>
+        4. <strong>Impersonal / Pasivo</strong> — no specific subject ("Spanish is spoken here")
+      </div>
+
+      <div class="block-heading">Examples — One Per Type</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">🪞 Reflexivo: Ella <em>se</em> lava el pelo.</div>
+          <div class="example-en">She washes her (own) hair. — She acts on herself</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">💞 Recíproco: Ellos <em>se</em> quieren mucho.</div>
+          <div class="example-en">They love each other a lot. — Action is mutual</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">📦 Le→Se: <em>Se</em> lo di a Juan. (Le lo → Se lo)</div>
+          <div class="example-en">I gave it to Juan. — "le" becomes "se" before "lo"</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">🌍 Impersonal: <em>Se</em> habla español aquí.</div>
+          <div class="example-en">Spanish is spoken here. — No specific subject</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Writing <strong>le lo</strong> instead of <strong>se lo</strong>: "Le lo dije" → <span class="correct">Se lo dije</span> (two L-pronouns can't go together)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Confusing reflexive with impersonal: "Yo me habla" ✗ — reflexive means YOU act on YOURSELF. Impersonal "se" has no subject and uses 3rd person verb.</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting that reciprocal "se" requires a PLURAL subject: "Se quiere" (just one person) ✗ vs <span class="correct">Se quieren</span> (they love each other) ✓</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">¿Qué tipo de "se" es? — "Se venden zapatos aquí."</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s7q1',false)"><span class="opt-letter">A</span> Reflexivo</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s7q1',false)"><span class="opt-letter">B</span> Recíproco</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s7q1',false)"><span class="opt-letter">C</span> Le → Se</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s7q1',true)"><span class="opt-letter">D</span> Impersonal / Pasivo</button>
+          </div>
+          <div class="feedback-msg" id="s7q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 2</div>
+          <div class="fill-row">
+            Yo quiero darle el libro a ella. →  Yo quiero
+            <input class="fill-input" id="s7f1" placeholder="..." style="width:100px;" />
+            dar.
+            <span class="fill-hint">(le → se + lo)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s7f1',ans:'se lo'}],'s7-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s7-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s7-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s7-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">Impersonal / Pasivo</span><span style="color:var(--text-dim);margin-left:8px;">no specific subject, passive meaning</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">se lo</span><span style="color:var(--text-dim);margin-left:8px;">le + lo → se lo (two L-pronouns)</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s6')">← Por vs Para</button>
+        <button class="nav-next" onclick="goTo('s8')">Next: Subjuntivo →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 8: SUBJUNTIVO -->
+    <div class="panel" id="panel-s8">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 08</div>
+        <div class="section-title">Subjuntivo</div>
+        <div class="section-subtitle">The mood of doubt, emotion, and influence — learn the triggers</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        The subjunctive isn't a tense — it's a <em>mood</em>. You use it when the main clause expresses <strong>wishes, emotions, doubt, or influence</strong> over another person.<br><br>
+        <strong>Formation:</strong> Start with the yo-form of present tense → drop the -o → add opposite endings.<br>
+        -AR verbs → add -e endings (hable, hables, hable...)<br>
+        -ER/-IR verbs → add -a endings (coma, comas, coma...)<br><br>
+        <strong>Key rule:</strong> Subjunctive usually appears in the SECOND clause, after "que," when the subjects are DIFFERENT.
+      </div>
+
+      <div class="block-heading">WEIRDO Triggers</div>
+      <div class="weirdo-grid">
+        <div class="weirdo-card">
+          <div class="weirdo-letter">W</div>
+          <div class="weirdo-word">Wishes</div>
+          <div class="weirdo-desc">querer que, desear que, esperar que</div>
+        </div>
+        <div class="weirdo-card">
+          <div class="weirdo-letter">E</div>
+          <div class="weirdo-word">Emotions</div>
+          <div class="weirdo-desc">alegrarse de que, tener miedo de que, sorprender que</div>
+        </div>
+        <div class="weirdo-card">
+          <div class="weirdo-letter">I</div>
+          <div class="weirdo-word">Impersonal</div>
+          <div class="weirdo-desc">es importante que, es necesario que, es bueno que</div>
+        </div>
+        <div class="weirdo-card">
+          <div class="weirdo-letter">R</div>
+          <div class="weirdo-word">Recommendations</div>
+          <div class="weirdo-desc">recomendar que, sugerir que, aconsejar que</div>
+        </div>
+        <div class="weirdo-card">
+          <div class="weirdo-letter">D</div>
+          <div class="weirdo-word">Doubt/Denial</div>
+          <div class="weirdo-desc">dudar que, no creer que, negar que</div>
+        </div>
+        <div class="weirdo-card">
+          <div class="weirdo-letter">O</div>
+          <div class="weirdo-word">Ojala</div>
+          <div class="weirdo-desc">ojalá (que) — always triggers subjunctive</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">Quiero que tú <em>estudies</em> más.</div>
+          <div class="example-en">I want you to study more. (Wish — different subjects)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Me alegra que <em>vengas</em> a la fiesta.</div>
+          <div class="example-en">I'm glad you're coming to the party. (Emotion)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Es importante que todos <em>lleguen</em> a tiempo.</div>
+          <div class="example-en">It's important that everyone arrive on time. (Impersonal)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Dudo que él <em>sepa</em> la respuesta.</div>
+          <div class="example-en">I doubt he knows the answer. (Doubt)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">¡Ojalá <em>haga</em> buen tiempo mañana!</div>
+          <div class="example-en">Hopefully the weather will be nice tomorrow!</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using subjunctive when subjects are THE SAME: <strong>Quiero que vaya</strong> (if I want MYSELF to go) → <span class="correct">Quiero ir</span> (infinitive — same subject)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using indicative after "creer" in affirmative (no trigger) vs negative (trigger): "Creo que <strong>es</strong> verdad" (indicative ✓) vs "No creo que <strong>sea</strong> verdad" (subjunctive ✓)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Irregular yo-form = irregular subjunctive. tener → tengo → <strong>tenga</strong>. salir → salgo → <strong>salga</strong>.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Mi mamá quiere que yo _____ (limpiar) mi cuarto.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q1',false)"><span class="opt-letter">A</span> limpio</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q1',false)"><span class="opt-letter">B</span> limpié</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q1',true)"><span class="opt-letter">C</span> limpie</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q1',false)"><span class="opt-letter">D</span> limpiaba</button>
+          </div>
+          <div class="feedback-msg" id="s8q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 2</div>
+          <div class="q-text">No creo que él _____ (tener) razón.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q2',false)"><span class="opt-letter">A</span> tiene</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q2',true)"><span class="opt-letter">B</span> tenga</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q2',false)"><span class="opt-letter">C</span> tenía</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s8q2',false)"><span class="opt-letter">D</span> tuvo</button>
+          </div>
+          <div class="feedback-msg" id="s8q2-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            Espero que tú
+            <input class="fill-input" id="s8f1" placeholder="venir..." />
+            a mi cumpleaños.
+            <span class="fill-hint">(subjuntivo)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s8f1',ans:'vengas'}],'s8-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s8-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s8-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s8-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">limpie</span><span style="color:var(--text-dim);margin-left:8px;">querer que → wish trigger, -ar verb → -e ending</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">tenga</span><span style="color:var(--text-dim);margin-left:8px;">no creer que → doubt trigger; tener → tengo → tenga</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">vengas</span><span style="color:var(--text-dim);margin-left:8px;">esperar que → wish; venir is irregular: vengas</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s7')">← Usos de Se</button>
+        <button class="nav-next" onclick="goTo('s9')">Next: Perf. Subjuntivo →</button>
+      </div>
+    </div>
+
+    <!-- SECTION 9: PERFECTO DE SUBJUNTIVO -->
+    <div class="panel" id="panel-s9">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> TOPIC 09</div>
+        <div class="section-title">Pretérito Perfecto de Subjuntivo</div>
+        <div class="section-subtitle">When something already happened — but the main clause still cares about it</div>
+      </div>
+
+      <div class="block-heading">Explanation</div>
+      <div class="explain-box">
+        This tense = the subjunctive version of "presente perfecto." Use it when:<br>
+        1. The main clause has a <strong>WEIRDO trigger</strong> (same as regular subjunctive)<br>
+        2. The action in the subordinate clause <em>has already happened</em> (or will have happened by the time the main clause is true)<br><br>
+        <strong>Structure:</strong> haya / hayas / haya / hayamos / hayáis / hayan + participio<br><br>
+        Think: "I'm glad that you <em>have come</em>" vs "I want you to <em>come</em>" (regular subjunctive)
+      </div>
+
+      <div class="block-heading">Timeline</div>
+      <div class="timeline">
+        <div class="tl-node tl-accent">
+          <div class="tl-label">haya llegado</div>
+          <div class="tl-sub">already happened</div>
+        </div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node tl-accent2">
+          <div class="tl-label">main clause</div>
+          <div class="tl-sub">espero / me alegra</div>
+        </div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node">
+          <div class="tl-label">AHORA</div>
+          <div class="tl-sub">now / future</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Examples</div>
+      <div class="examples-list">
+        <div class="example-item">
+          <div class="example-es">Espero que él <em>haya llegado</em> bien.</div>
+          <div class="example-en">I hope he has arrived safely. (he may have already arrived)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Me alegra que <em>hayas aprobado</em> el examen.</div>
+          <div class="example-en">I'm glad you have passed the exam. (already happened)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">Es bueno que lo <em>hayas dicho</em>.</div>
+          <div class="example-en">It's good that you said it. (already said)</div>
+        </div>
+        <div class="example-item">
+          <div class="example-es">No creo que ellos <em>hayan terminado</em> todavía.</div>
+          <div class="example-en">I don't think they have finished yet.</div>
+        </div>
+      </div>
+
+      <div class="block-heading">Common Mistakes</div>
+      <div class="mistakes-box">
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Using regular subjunctive when the action is already completed: "Me alegra que vengas" (coming in the future) vs <span class="correct">"Me alegra que hayas venido"</span> (already came)</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Confusing haber conjugations: it's <strong>haya</strong> (subjunctive of "ha") — NOT "ha" or "había"</div>
+        </div>
+        <div class="mistake-item">
+          <span class="mistake-icon">✕</span>
+          <div>Forgetting irregular participles still apply: <strong>haya hecho, haya dicho, haya visto</strong></div>
+        </div>
+      </div>
+
+      <div class="block-heading">Practice</div>
+      <div class="practice-area">
+        <div class="q-block">
+          <div class="q-label">Multiple Choice · 1</div>
+          <div class="q-text">Me sorprende que tú _____ (estudiar) tanto anoche.</div>
+          <div class="options-list">
+            <button class="opt-btn" onclick="checkMCQ(this,'s9q1',false)"><span class="opt-letter">A</span> hayas estudiado</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s9q1',false)"><span class="opt-letter">B</span> estudias</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s9q1',false)"><span class="opt-letter">C</span> estudiaste</button>
+            <button class="opt-btn" onclick="checkMCQ(this,'s9q1',true)"><span class="opt-letter">A</span> hayas estudiado</button>
+          </div>
+          <div class="feedback-msg" id="s9q1-fb"></div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 2</div>
+          <div class="fill-row">
+            Espero que ellos
+            <input class="fill-input" id="s9f1" placeholder="terminar..." />
+            el proyecto.
+            <span class="fill-hint">(perf. subj.)</span>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <div class="q-label">Fill in the Blank · 3</div>
+          <div class="fill-row">
+            Es una lástima que tú no
+            <input class="fill-input" id="s9f2" placeholder="venir..." />
+            a la fiesta.
+            <span class="fill-hint">(perf. subj., tú)</span>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkFills([{id:'s9f1',ans:'hayan terminado'},{id:'s9f2',ans:'hayas venido'}],'s9-fill-fb')">Check Answers ✓</button>
+        <div class="feedback-msg" id="s9-fill-fb"></div>
+
+        <div class="answer-key-wrap">
+          <button class="toggle-answers" onclick="toggleKey('s9-key')">Show Answer Key ↓</button>
+          <div class="answer-key-content" id="s9-key">
+            <ul class="ans-list">
+              <li class="ans-item"><span class="ans-num">1.</span><span class="ans-val">hayas estudiado</span><span style="color:var(--text-dim);margin-left:8px;">emotion trigger + completed action</span></li>
+              <li class="ans-item"><span class="ans-num">2.</span><span class="ans-val">hayan terminado</span><span style="color:var(--text-dim);margin-left:8px;">esperar que + ellos = hayan</span></li>
+              <li class="ans-item"><span class="ans-num">3.</span><span class="ans-val">hayas venido</span><span style="color:var(--text-dim);margin-left:8px;">lástima que + tú = hayas; venir → venido</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s8')">← Subjuntivo</button>
+        <button class="nav-next" onclick="goTo('test')">Next: Mixed Final Test ★</button>
+      </div>
+    </div>
+
+    <!-- MIXED FINAL TEST -->
+    <div class="panel" id="panel-test">
+      <div class="section-header">
+        <div class="section-tag"><span class="dot"></span> FINAL CHALLENGE</div>
+        <div class="section-title">Mixed Practice Test</div>
+        <div class="section-subtitle">15 questions covering all 9 topics — time to put it all together</div>
+      </div>
+
+      <div class="score-display" id="score-display">
+        <div class="score-big" id="score-num">—</div>
+        <div class="score-label" id="score-label">out of 15</div>
+        <div class="score-message" id="score-msg"></div>
+      </div>
+
+      <div id="test-questions">
+        <div class="practice-area" style="margin-bottom:16px;">
+
+          <!-- Q1 -->
+          <div class="q-block">
+            <div class="q-label">Q1 · Pretérito vs Imperfecto</div>
+            <div class="q-text">Todos los veranos, mi familia y yo _____ (ir) a la playa.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q1" onclick="markTest(this,'q1',false)"><span class="opt-letter">A</span> fuimos</button>
+              <button class="opt-btn" data-test="q1" onclick="markTest(this,'q1',true)"><span class="opt-letter">B</span> íbamos</button>
+              <button class="opt-btn" data-test="q1" onclick="markTest(this,'q1',false)"><span class="opt-letter">C</span> vamos</button>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="q-block">
+            <div class="q-label">Q2 · Pretérito vs Imperfecto</div>
+            <div class="q-text">Ayer ella _____ (romper) su teléfono en el pasillo.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q2" onclick="markTest(this,'q2',false)"><span class="opt-letter">A</span> rompía</button>
+              <button class="opt-btn" data-test="q2" onclick="markTest(this,'q2',true)"><span class="opt-letter">B</span> rompió</button>
+              <button class="opt-btn" data-test="q2" onclick="markTest(this,'q2',false)"><span class="opt-letter">C</span> rompe</button>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="q-block">
+            <div class="q-label">Q3 · Presente Perfecto</div>
+            <div class="q-text">Este año yo _____ (leer) cinco libros.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q3" onclick="markTest(this,'q3',false)"><span class="opt-letter">A</span> leí</button>
+              <button class="opt-btn" data-test="q3" onclick="markTest(this,'q3',false)"><span class="opt-letter">B</span> había leído</button>
+              <button class="opt-btn" data-test="q3" onclick="markTest(this,'q3',true)"><span class="opt-letter">C</span> he leído</button>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="q-block">
+            <div class="q-label">Q4 · Pluscuamperfecto</div>
+            <div class="q-text">Cuando llegué, mis amigos ya _____ (comer).</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q4" onclick="markTest(this,'q4',true)"><span class="opt-letter">A</span> habían comido</button>
+              <button class="opt-btn" data-test="q4" onclick="markTest(this,'q4',false)"><span class="opt-letter">B</span> han comido</button>
+              <button class="opt-btn" data-test="q4" onclick="markTest(this,'q4',false)"><span class="opt-letter">C</span> comieron</button>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="q-block">
+            <div class="q-label">Q5 · Acentos</div>
+            <div class="q-text">Which sentence uses accents correctly?</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q5" onclick="markTest(this,'q5',false)"><span class="opt-letter">A</span> Tu eres mi amigo.</button>
+              <button class="opt-btn" data-test="q5" onclick="markTest(this,'q5',true)"><span class="opt-letter">B</span> Tú eres mi amigo.</button>
+              <button class="opt-btn" data-test="q5" onclick="markTest(this,'q5',false)"><span class="opt-letter">C</span> El libro es tuyo.</button>
+            </div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="q-block">
+            <div class="q-label">Q6 · Frases Impersonales</div>
+            <div class="q-text">_____ que estudiar más antes del examen.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q6" onclick="markTest(this,'q6',false)"><span class="opt-letter">A</span> Es</button>
+              <button class="opt-btn" data-test="q6" onclick="markTest(this,'q6',true)"><span class="opt-letter">B</span> Hay</button>
+              <button class="opt-btn" data-test="q6" onclick="markTest(this,'q6',false)"><span class="opt-letter">C</span> Se</button>
+            </div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="q-block">
+            <div class="q-label">Q7 · Por vs Para</div>
+            <div class="q-text">Compré flores _____ mi profesora.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q7" onclick="markTest(this,'q7',false)"><span class="opt-letter">A</span> por</button>
+              <button class="opt-btn" data-test="q7" onclick="markTest(this,'q7',true)"><span class="opt-letter">B</span> para</button>
+            </div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="q-block">
+            <div class="q-label">Q8 · Por vs Para</div>
+            <div class="q-text">Caminé _____ el parque durante una hora.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q8" onclick="markTest(this,'q8',true)"><span class="opt-letter">A</span> por</button>
+              <button class="opt-btn" data-test="q8" onclick="markTest(this,'q8',false)"><span class="opt-letter">B</span> para</button>
+            </div>
+          </div>
+
+          <!-- Q9 -->
+          <div class="q-block">
+            <div class="q-label">Q9 · Usos de "Se"</div>
+            <div class="q-text">Identifica el tipo de "se": — "Ellos se abrazan todos los días."</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q9" onclick="markTest(this,'q9',false)"><span class="opt-letter">A</span> Reflexivo</button>
+              <button class="opt-btn" data-test="q9" onclick="markTest(this,'q9',true)"><span class="opt-letter">B</span> Recíproco</button>
+              <button class="opt-btn" data-test="q9" onclick="markTest(this,'q9',false)"><span class="opt-letter">C</span> Impersonal</button>
+            </div>
+          </div>
+
+          <!-- Q10 -->
+          <div class="q-block">
+            <div class="q-label">Q10 · Usos de "Se"</div>
+            <div class="q-text">Quiero darle el regalo a mi amiga. → Quiero _____ dar.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q10" onclick="markTest(this,'q10',false)"><span class="opt-letter">A</span> le lo</button>
+              <button class="opt-btn" data-test="q10" onclick="markTest(this,'q10',true)"><span class="opt-letter">B</span> se lo</button>
+              <button class="opt-btn" data-test="q10" onclick="markTest(this,'q10',false)"><span class="opt-letter">C</span> lo le</button>
+            </div>
+          </div>
+
+          <!-- Q11 -->
+          <div class="q-block">
+            <div class="q-label">Q11 · Subjuntivo</div>
+            <div class="q-text">Mi papá quiere que yo _____ (sacar) buenas notas.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q11" onclick="markTest(this,'q11',false)"><span class="opt-letter">A</span> saco</button>
+              <button class="opt-btn" data-test="q11" onclick="markTest(this,'q11',false)"><span class="opt-letter">B</span> saqué</button>
+              <button class="opt-btn" data-test="q11" onclick="markTest(this,'q11',true)"><span class="opt-letter">C</span> saque</button>
+            </div>
+          </div>
+
+          <!-- Q12 -->
+          <div class="q-block">
+            <div class="q-label">Q12 · Subjuntivo</div>
+            <div class="q-text">Ojalá que ella _____ (poder) venir mañana.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q12" onclick="markTest(this,'q12',false)"><span class="opt-letter">A</span> puede</button>
+              <button class="opt-btn" data-test="q12" onclick="markTest(this,'q12',true)"><span class="opt-letter">B</span> pueda</button>
+              <button class="opt-btn" data-test="q12" onclick="markTest(this,'q12',false)"><span class="opt-letter">C</span> podía</button>
+            </div>
+          </div>
+
+          <!-- Q13 -->
+          <div class="q-block">
+            <div class="q-label">Q13 · Perfecto de Subjuntivo</div>
+            <div class="q-text">Me sorprende que tú _____ (hacer) todo el proyecto solo.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q13" onclick="markTest(this,'q13',false)"><span class="opt-letter">A</span> hacías</button>
+              <button class="opt-btn" data-test="q13" onclick="markTest(this,'q13',true)"><span class="opt-letter">B</span> hayas hecho</button>
+              <button class="opt-btn" data-test="q13" onclick="markTest(this,'q13',false)"><span class="opt-letter">C</span> has hecho</button>
+            </div>
+          </div>
+
+          <!-- Q14 -->
+          <div class="q-block">
+            <div class="q-label">Q14 · Mixed — Identify the tense</div>
+            <div class="q-text">"Cuando era pequeño, vivía en una ciudad pequeña." — What tense is "vivía"?</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q14" onclick="markTest(this,'q14',false)"><span class="opt-letter">A</span> Pretérito</button>
+              <button class="opt-btn" data-test="q14" onclick="markTest(this,'q14',true)"><span class="opt-letter">B</span> Imperfecto</button>
+              <button class="opt-btn" data-test="q14" onclick="markTest(this,'q14',false)"><span class="opt-letter">C</span> Presente Perfecto</button>
+            </div>
+          </div>
+
+          <!-- Q15 -->
+          <div class="q-block">
+            <div class="q-label">Q15 · Mixed — Por vs Para + Impersonal</div>
+            <div class="q-text">Es necesario que todos _____ (trabajar) juntos _____ lograr el objetivo.</div>
+            <div class="options-list">
+              <button class="opt-btn" data-test="q15" onclick="markTest(this,'q15',true)"><span class="opt-letter">A</span> trabajen / para</button>
+              <button class="opt-btn" data-test="q15" onclick="markTest(this,'q15',false)"><span class="opt-letter">B</span> trabajan / por</button>
+              <button class="opt-btn" data-test="q15" onclick="markTest(this,'q15',false)"><span class="opt-letter">C</span> trabajen / por</button>
+            </div>
+          </div>
+
+          <button class="submit-test" onclick="submitTest()">Submit Test & See Score →</button>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-prev" onclick="goTo('s9')">← Back to Topic 09</button>
+        <button class="nav-next" onclick="goTo('home')">Back to Home ↺</button>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+  const sections = ['home','s1','s2','s3','s4','s5','s6','s7','s8','s9','test'];
+  const titles = {
+    home: 'Home',
+    s1: '01 · Pretérito vs Imperfecto',
+    s2: '02 · Presente Perfecto vs Pluscuamperfecto',
+    s3: '03 · Tiempos en Pasado',
+    s4: '04 · Acentos',
+    s5: '05 · Frases Impersonales',
+    s6: '06 · Por vs Para',
+    s7: '07 · Usos de "Se"',
+    s8: '08 · Subjuntivo',
+    s9: '09 · Pretérito Perfecto de Subjuntivo',
+    test: '★ Mixed Final Test'
+  };
+
+  const visited = new Set(['home']);
+
+  function goTo(id) {
+    document.querySelectorAll('.panel, .hero-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const panel = document.getElementById('panel-' + id);
+    if (panel) panel.classList.add('active');
+    const navItem = document.querySelector('[data-section="' + id + '"]');
+    if (navItem) navItem.classList.add('active');
+    document.getElementById('topbar-title').textContent = titles[id] || id;
+    visited.add(id);
+    updateProgress();
+    window.scrollTo(0,0);
+    // close sidebar on mobile
+    document.getElementById('sidebar').classList.remove('open');
+  }
+
+  function updateProgress() {
+    const count = Math.max(0, [...visited].filter(v => v !== 'home').length);
+    const total = 9;
+    document.getElementById('progress-label').textContent = count + ' / ' + total;
+    document.getElementById('progress-fill').style.width = Math.round((count/total)*100) + '%';
+  }
+
+  // nav item clicks
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goTo(item.dataset.section));
+  });
+
+  // hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  // MCQ checker
+  const answered = {};
+  function checkMCQ(btn, qid, isCorrect) {
+    if (answered[qid]) return;
+    answered[qid] = true;
+    const parent = btn.closest('.q-block');
+    const allBtns = parent.querySelectorAll('.opt-btn');
+    allBtns.forEach(b => { b.disabled = true; });
+    const fb = document.getElementById(qid + '-fb');
+    if (isCorrect) {
+      btn.classList.add('correct');
+      if (fb) { fb.textContent = '✓ Correct!'; fb.className = 'feedback-msg show feedback-correct'; }
+    } else {
+      btn.classList.add('wrong');
+      // find and show correct
+      allBtns.forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes('true')) {
+          b.classList.add('correct');
+        }
+      });
+      if (fb) { fb.textContent = '✗ Not quite — the highlighted answer is correct.'; fb.className = 'feedback-msg show feedback-wrong'; }
+    }
+  }
+
+  // Fill checker
+  function checkFills(pairs, fbId) {
+    let correct = 0;
+    pairs.forEach(({id, ans}) => {
+      const input = document.getElementById(id);
+      if (!input) return;
+      const val = input.value.trim().toLowerCase().replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u');
+      const expected = ans.toLowerCase().replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u');
+      if (val === expected) {
+        input.className = 'fill-input fill-correct';
+        correct++;
+      } else {
+        input.className = 'fill-input fill-wrong';
+      }
+    });
+    const fb = document.getElementById(fbId);
+    if (fb) {
+      if (correct === pairs.length) {
+        fb.textContent = '✓ All correct! Great job.';
+        fb.className = 'feedback-msg show feedback-correct';
+      } else {
+        fb.textContent = '✗ ' + correct + '/' + pairs.length + ' correct. Check the answer key below.';
+        fb.className = 'feedback-msg show feedback-wrong';
+      }
+    }
+  }
+
+  // Toggle answer key
+  function toggleKey(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('show');
+    const btn = el.previousElementSibling;
+    btn.textContent = el.classList.contains('show') ? 'Hide Answer Key ↑' : 'Show Answer Key ↓';
+  }
+
+  // Test logic
+  const testAnswers = {};
+  function markTest(btn, qid, isCorrect) {
+    if (testAnswers[qid] !== undefined) return;
+    testAnswers[qid] = isCorrect;
+    const parent = btn.closest('.q-block');
+    parent.querySelectorAll('.opt-btn').forEach(b => { b.disabled = true; });
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      parent.querySelectorAll('.opt-btn').forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+      });
+    }
+  }
+
+  function submitTest() {
+    let score = 0;
+    for (let i = 1; i <= 15; i++) {
+      if (testAnswers['q'+i] === true) score++;
+    }
+    const disp = document.getElementById('score-display');
+    document.getElementById('score-num').textContent = score + '/15';
+    document.getElementById('score-label').textContent = 'Score — ' + Math.round((score/15)*100) + '%';
+    const msg = document.getElementById('score-msg');
+    if (score >= 13) msg.textContent = '🏆 Excellent! You\'re ready for finals!';
+    else if (score >= 10) msg.textContent = '👍 Good job! Review a couple topics and you\'re set.';
+    else if (score >= 7) msg.textContent = '📚 Not bad — go back and review the ones you missed.';
+    else msg.textContent = '💪 Keep studying! Go back through each topic carefully.';
+    disp.classList.add('show');
+    disp.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+</script>
+</body>
+</html>
